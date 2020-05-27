@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Tutorial Flask: Miniblog</title>
-</head>
-<body>
-    {{ num_posts }} posts
-</body>
-</html>
+{% extends "template.html" %}
+
+{% block contenttitle %}
+<title>Inicio</title>
+{% endblock %}
+
+{% block contentbody %}
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h2 class="border-bottom border-gray pb-2 mb-0">Proyecto de IO Programación Lineal</h2>
+    <h3>Guillermo Alfredo Galindo Girón</h3>
+    <h4>201508017</h4>
+    <h5>Esta App web perminte solucionar problema de programación lineal mediante los Siguientes métodos:
+      <ol>
+        <li>Método Gráfico</li>
+        <li>Método Simplex</li>
+        <li>Método de la Gran M</li>
+      </ol>
+      Para el Proyecto final se incluirán otros sobre el problema del transporte con sus distintas soluciones.
+    </h5>
+    <h6>Código fuente disponible en <a href="https://github.com/DryMemoG/Linear_Programming">Github</a></h6>
+  
+      </thead>
+  
+
+  
+</div>
+{% endblock %}
