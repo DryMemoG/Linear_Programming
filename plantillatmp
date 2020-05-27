@@ -1,0 +1,9 @@
+{% extends "template.html" %}
+
+{% block contenttitle %}
+<title></title>
+{% endblock %}
+
+{% block contentbody %}
+
+{% endblock %}
