@@ -1,0 +1,42 @@
+{% extends "template.html" %}
+
+{% block contenttitle %}
+<title>Método de la Gran M</title>
+{% endblock %}
+
+{% block contentbody %}
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h2 class="border-bottom border-gray pb-2 mb-0">Ingreso de Datos: </h2>
+    <!--TITULO-->
+    <form action="/transportrussellsol" method="POST">
+    <div class="row-md-4 mb-3">
+        <br>
+        
+          <div class="col-md-6"></div>
+          <label for="firstName">Nombres de los Proveedores</label>
+          <input type="text" class="form-control" id="restricts" name="ofertadores" placeholder="" value="" required="">
+          <br>
+          <label for="firstName">Ofertas</label>
+          <input type="text" class="form-control" id="desicion" name="oferta" placeholder="" value="" required="">
+          <br>
+          <label for="firstName">Nombres de los compradores:</label>
+          <input type="text" class="form-control" id="desicion" name="demandadores" placeholder="" value="" required="">
+          <br>
+          <label for="firstName">Demanda</label>
+          <input type="text" class="form-control" id="desicion" name="demanda" placeholder="" value="" required="">
+          <br>
+          <label for="firstName">Costos por Envío</label>
+          <input type="text" class="form-control" id="desicion" name="costos" placeholder="" value="" required="">
+          </div>
+        <div class="col-md-6"></div>
+        <input  class="btn btn-primary btn-lg btn-block" type="submit" id="send_restricts" />
+        <div class="invalid-feedback">
+          Valid number is required
+        </div>
+        </div>
+      </form>
+        
+      </div>
+    
+</div>
+{% endblock %}

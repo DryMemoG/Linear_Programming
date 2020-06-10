@@ -24,7 +24,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
       
-			<div class="navbar-collapse collapse" id="navbarsExample05" style="">
+			<div class="navbar-collapse collapse" id="navbarsExample05">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
 						<a class="nav-link" href="{{url_for('inicio')}}">Inicio <span class="sr-only">(current)</span></a>
@@ -42,7 +42,7 @@
             			</div>
 					</li>				
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Método de la Gran M222</a>
+						<a class="nav-link dropdown-toggle" href="" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Método de la Gran M</a>
 						<div class="dropdown-menu" aria-labelledby="dropdown05">
               				<a class="dropdown-item" href="{{url_for('fnMGM')}}">Nuevos</a>
             			</div>
@@ -51,8 +51,11 @@
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Método del Transporte</a>
 						<div class="dropdown-menu" aria-labelledby="dropdown05">
-              				<a class="dropdown-item" href="{{url_for('fnTDatos')}}">Nuevo</a>
+							  <a class="dropdown-item" href="{{url_for('fnTDatos')}}">Costo Mínimo</a>
+							  <a class="dropdown-item" href="{{url_for('fnTvogelDatos')}}">Aprox. de Vogel</a>
+							  <a class="dropdown-item" href="{{url_for('fnTrussellDatos')}}">Russell</a>
 						</div>
+						
 					</li>
 					
 				</ul>

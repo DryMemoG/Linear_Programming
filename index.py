@@ -92,19 +92,27 @@ def fnTDatos():
 
 def transporte():
     problema=LpProblem("Problema_del_Transporte_IO", LpMinimize)
-    ofertadores=request.form['ofertadores']
-    ofertas=request.form['oferta']
+    ofs=request.form['ofertadores']
+    ofsplit=ofs.split(',')
+    ofertadores=[x for x in ofsplit]
+
+    ofrs=request.form['oferta']
+    ofrsplit=ofrs.split(',')
+    ofertas=[int(x) for x in ofrsplit]
     oferta=dict(zip(ofertadores,ofertas))
     
-    demandadores=request.form['demandadores']
-    demandas=request.form['demanda']
-    demanda=dict(zip(demandadores,demandas))
+    demans=request.form['demandadores']
+    dmnsplit = demans.split(',')
+    demandadores=[x for x in dmnsplit]
+    dems=request.form['demanda']
+    
     #c=demandas
-    dsplit=demandas.split(',')#aqui vamos a dividir la cadena de 1,2,3,4 en un arreglo numerico
+    dsplit=dems.split(',')#aqui vamos a dividir la cadena de 1,2,3,4 en un arreglo numerico
     demandas=[int(x) for x in dsplit]#lo guardamos de nuevo en demandas
+    demanda=dict(zip(demandadores,demandas))
     #d=costos
-    costos=request.form['costos']#llamamos a costos desde el html
-    csplit = costos.split(',')#spliteamos
+    costo=request.form['costos']#llamamos a costos desde el html
+    csplit = costo.split(',')#spliteamos
     xx = [int(x) for x in csplit]#ahora es un vector
     costos = np.array(xx).reshape(int(len(xx)/len(demandas)),len(demandas))#aquí ya es una matriz
     #lista de listas con las variables
@@ -122,19 +130,143 @@ def transporte():
         problema += sum([cv[o][d] for o in ofertadores]) >= demanda[d], \
                 "Suma_de_Demanda_Bar_%s" % d
 
-
+    datos = " "
     problema.writeLP("ProblemaTransporte.lp")
     problema.solve()
     print("Status: {}".format(LpStatus[problema.status]))
     for v in problema.variables():
-        datos=("{0:}={1:}".format(v.name,v.varValue))
-        print("{0:}={1:}".format(v.name,v.varValue))
+        datos=datos+("{0:}={1:}".format(v.name,v.varValue))+"\n"
+        
 
-    print("Costo Mínimo: Q.{}".format(problema.objective.value()))
+    
     sol=("Costo Mínimo: Q.{}".format(problema.objective.value()))
 
 
     return render_template("TPSol.html", dat=datos,sol=sol)
+
+
+@app.route("/transportvogel")
+def fnTvogelDatos():
+    return render_template("TPDatosvogel.html")
+
+
+@app.route("/transportvogelsol",methods=["GET", "POST"])
+
+def transportevogel():
+    problema=LpProblem("Problema_del_Transporte_IO", LpMinimize)
+    ofs=request.form['ofertadores']
+    ofsplit=ofs.split(',')
+    ofertadores=[x for x in ofsplit]
+
+    ofrs=request.form['oferta']
+    ofrsplit=ofrs.split(',')
+    ofertas=[int(x) for x in ofrsplit]
+    oferta=dict(zip(ofertadores,ofertas))
+    
+    demans=request.form['demandadores']
+    dmnsplit = demans.split(',')
+    demandadores=[x for x in dmnsplit]
+    dems=request.form['demanda']
+    
+    #c=demandas
+    dsplit=dems.split(',')#aqui vamos a dividir la cadena de 1,2,3,4 en un arreglo numerico
+    demandas=[int(x) for x in dsplit]#lo guardamos de nuevo en demandas
+    demanda=dict(zip(demandadores,demandas))
+    #d=costos
+    costo=request.form['costos']#llamamos a costos desde el html
+    csplit = costo.split(',')#spliteamos
+    xx = [int(x) for x in csplit]#ahora es un vector
+    costos = np.array(xx).reshape(int(len(xx)/len(demandas)),len(demandas))#aquí ya es una matriz
+    #lista de listas con las variables
+
+    costos = makeDict([ofertadores,demandadores],costos,0)
+    rutas=[(o,d)for o in oferta for d in demanda]
+    cv= LpVariable.dicts("Ruta",(ofertadores,demandadores),0,None, LpInteger)
+    problema+=lpSum(costos[o][d]*cv[o][d] for (o,d) in rutas),"Función_Objetivo"
+
+    for o in ofertadores:
+        problema+= sum([cv[o][d] for d in demanda]) <= oferta[o], \
+                "Suma_de_Productos_que_salen_%s" % o
+
+    for d in demandadores:
+        problema += sum([cv[o][d] for o in ofertadores]) >= demanda[d], \
+                "Suma_de_Demanda_Bar_%s" % d
+
+    datos = " "
+    problema.writeLP("ProblemaTransporte.lp")
+    problema.solve()
+    print("Status: {}".format(LpStatus[problema.status]))
+    for v in problema.variables():
+        datos=datos+("{0:}={1:}".format(v.name,v.varValue))+"\n"
+        
+
+    
+    sol=("Costo Mínimo: Q.{}".format(problema.objective.value()))
+
+
+    return render_template("TPvogelSol.html", dat=datos,sol=sol)
+
+
+@app.route("/transportrussell")
+def fnTrussellDatos():
+    return render_template("TPDatosrussell.html")
+
+
+@app.route("/transportrussellsol",methods=["GET", "POST"])
+
+def transportrussell():
+    problema=LpProblem("Problema_del_Transporte_IO", LpMinimize)
+    ofs=request.form['ofertadores']
+    ofsplit=ofs.split(',')
+    ofertadores=[x for x in ofsplit]
+
+    ofrs=request.form['oferta']
+    ofrsplit=ofrs.split(',')
+    ofertas=[int(x) for x in ofrsplit]
+    oferta=dict(zip(ofertadores,ofertas))
+    
+    demans=request.form['demandadores']
+    dmnsplit = demans.split(',')
+    demandadores=[x for x in dmnsplit]
+    dems=request.form['demanda']
+    
+    #c=demandas
+    dsplit=dems.split(',')#aqui vamos a dividir la cadena de 1,2,3,4 en un arreglo numerico
+    demandas=[int(x) for x in dsplit]#lo guardamos de nuevo en demandas
+    demanda=dict(zip(demandadores,demandas))
+    #d=costos
+    costo=request.form['costos']#llamamos a costos desde el html
+    csplit = costo.split(',')#spliteamos
+    xx = [int(x) for x in csplit]#ahora es un vector
+    costos = np.array(xx).reshape(int(len(xx)/len(demandas)),len(demandas))#aquí ya es una matriz
+    #lista de listas con las variables
+
+    costos = makeDict([ofertadores,demandadores],costos,0)
+    rutas=[(o,d)for o in oferta for d in demanda]
+    cv= LpVariable.dicts("Ruta",(ofertadores,demandadores),0,None, LpInteger)
+    problema+=lpSum(costos[o][d]*cv[o][d] for (o,d) in rutas),"Función_Objetivo"
+
+    for o in ofertadores:
+        problema+= sum([cv[o][d] for d in demanda]) <= oferta[o], \
+                "Suma_de_Productos_que_salen_%s" % o
+
+    for d in demandadores:
+        problema += sum([cv[o][d] for o in ofertadores]) >= demanda[d], \
+                "Suma_de_Demanda_Bar_%s" % d
+
+    datos = " "
+    problema.writeLP("ProblemaTransporte.lp")
+    problema.solve()
+    print("Status: {}".format(LpStatus[problema.status]))
+    for v in problema.variables():
+        datos=datos+("{0:}={1:}".format(v.name,v.varValue))+"\n"
+        
+
+    
+    sol=("Costo Mínimo: Q.{}".format(problema.objective.value()))
+
+
+    return render_template("TPrussellSol.html", dat=datos,sol=sol)
 
 
 if __name__ == "__main__":
