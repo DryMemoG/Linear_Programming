@@ -13,10 +13,10 @@ Suma_de_Demanda_Bar_Bar4: Ruta_Cervecería1_Bar4 + Ruta_Cervecería2_Bar4 >= 200
 Suma_de_Demanda_Bar_Bar5: Ruta_Cervecería1_Bar5 + Ruta_Cervecería2_Bar5 >= 700
 Suma_de_Productos_que_salen_Cervecería1: Ruta_Cervecería1_Bar1
  + Ruta_Cervecería1_Bar2 + Ruta_Cervecería1_Bar3 + Ruta_Cervecería1_Bar4
- + Ruta_Cervecería1_Bar5 <= 100
+ + Ruta_Cervecería1_Bar5 <= 1000
 Suma_de_Productos_que_salen_Cervecería2: Ruta_Cervecería2_Bar1
  + Ruta_Cervecería2_Bar2 + Ruta_Cervecería2_Bar3 + Ruta_Cervecería2_Bar4
- + Ruta_Cervecería2_Bar5 <= 400
+ + Ruta_Cervecería2_Bar5 <= 4000
 Bounds
 0 <= Ruta_Cervecería1_Bar1
 0 <= Ruta_Cervecería1_Bar2

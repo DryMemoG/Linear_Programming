@@ -36,20 +36,29 @@ def fnMSimplexsol():
     restricc = request.form['restricc']
     rsplit = restricc.split(',')
     d = [int(x) for x in rsplit]
-    A_ub = np.array(d).reshape(len(c),int(len(d)/len(c)))
+    A_ub = np.array(d).reshape(int(len(d)/len(c)),len(c))
     
      
     #A_ub=[[1,4,8],[40,30,20],[3,2,4]]
     vsol = request.form['vsolucion']
     vssplit = vsol.split(',')
     b_ub=[int(x) for x in vssplit]
-    esim = request.form['esimple']
-    esimsplit = esim.split(',')
-    A_eq=[[int(x) for x in esimsplit]]
-    resu=request.form['resultado']
-    ressplit = resu.split(',')
-    b_eq=[int(x) for x in ressplit]
-    res = linprog(c,A_ub,b_ub,A_eq,b_eq,bounds=(0,None))
+    A_ubt=[]
+    b_ubt=[]
+    maxmin= request.form['valor']
+    if maxmin=="min":
+        for x in A_ub:
+            x =x*-1
+            A_ubt.append(x)
+        for y in b_ub:
+            y=y*-1
+            b_ubt.append(y)
+        A_ub=A_ubt
+        b_ub=b_ubt
+    else:
+        A_ub= A_ub
+        b_ub=b_ub
+    res = linprog(c,A_ub,b_ub,bounds=(0,None))
     solucion = "Valor óptimo: "+str(res.fun)+"\nX: "+str(res.x)
     return render_template("msimplexsol.html",res=solucion)
     
@@ -66,20 +75,31 @@ def fnGMsol():
     restricc = request.form['restricc']
     rsplit = restricc.split(',')
     d = [int(x) for x in rsplit]
-    A_ub = np.array(d).reshape(len(c),int(len(d)/len(c)))
-    
-     
-    #A_ub=[[1,4,8],[40,30,20],[3,2,4]]
+    A_ub = np.array(d).reshape(int(len(d)/len(c)),len(c))
     vsol = request.form['vsolucion']
     vssplit = vsol.split(',')
     b_ub=[int(x) for x in vssplit]
-    esim = request.form['esimple']
-    esimsplit = esim.split(',')
-    A_eq=[[int(x) for x in esimsplit]]
-    resu=request.form['resultado']
-    ressplit = resu.split(',')
-    b_eq=[int(x) for x in ressplit]
-    res = linprog(c,A_ub,b_ub,A_eq,b_eq,bounds=(0,None))
+    A_ubt=[]
+    b_ubt=[]
+    maxmin= request.form['valor']
+    if maxmin=="min":
+        for x in A_ub:
+            x =x*-1
+            A_ubt.append(x)
+        for y in b_ub:
+            y=y*-1
+            b_ubt.append(y)
+        A_ub=A_ubt
+        b_ub=b_ubt
+    else:
+        A_ub= A_ub
+        b_ub=b_ub
+
+     
+    #A_ub=[[1,4,8],[40,30,20],[3,2,4]]
+    
+    
+    res = linprog(c,A_ub,b_ub,bounds=(0,None))
     solucion = "Valor óptimo: "+str(res.fun)+"\nX: "+str(res.x)
     return render_template("GMsol.html",res=solucion)
 
@@ -201,7 +221,7 @@ def transportevogel():
         
 
     
-    sol=("Costo Mínimo: Q.{}".format(problema.objective.value()))
+    sol=("Aproximación: Q.{}".format(problema.objective.value()))
 
 
     return render_template("TPvogelSol.html", dat=datos,sol=sol)
@@ -263,11 +283,11 @@ def transportrussell():
         
 
     
-    sol=("Costo Mínimo: Q.{}".format(problema.objective.value()))
+    sol=("Costo: Q.{}".format(problema.objective.value()))
 
 
     return render_template("TPrussellSol.html", dat=datos,sol=sol)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
